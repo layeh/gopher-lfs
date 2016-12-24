@@ -1,4 +1,4 @@
-package lfs
+package lfs // import "layeh.com/gopher-lfs"
 
 import (
 	"os"
