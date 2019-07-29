@@ -1,4 +1,4 @@
-package lfs // import "layeh.com/gopher-lfs"
+package lfs
 
 import (
 	"github.com/yuin/gopher-lua"
