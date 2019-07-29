@@ -16,7 +16,11 @@ func attributes(L *lua.LState, statFunc func(string) (os.FileInfo, error)) int {
 		return 2
 	}
 	table := L.NewTable()
-	attributesFill(table, stat)
+	if err := attributesFill(table, stat); err != nil {
+		L.Push(lua.LNil)
+		L.Push(lua.LString(err.Error()))
+		return 2
+	}
 	if L.GetTop() > 1 {
 		aname := L.CheckString(2)
 		L.Push(table.RawGetH(lua.LString(aname)))

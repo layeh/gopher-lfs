@@ -1,3 +1,5 @@
+// +build darwin
+
 package lfs
 
 import (
@@ -7,11 +9,8 @@ import (
 	"github.com/yuin/gopher-lua"
 )
 
-func attributesFill(tbl *lua.LTable, stat os.FileInfo) {
-	sys, ok := stat.Sys().(*syscall.Stat_t)
-	if !ok {
-		return
-	}
+func attributesFill(tbl *lua.LTable, stat os.FileInfo) error {
+	sys := stat.Sys().(*syscall.Stat_t)
 	tbl.RawSetH(lua.LString("dev"), lua.LNumber(sys.Dev))
 	tbl.RawSetH(lua.LString("ino"), lua.LNumber(sys.Ino))
 	{
@@ -46,4 +45,5 @@ func attributesFill(tbl *lua.LTable, stat os.FileInfo) {
 	tbl.RawSetH(lua.LString("size"), lua.LNumber(sys.Size))
 	tbl.RawSetH(lua.LString("blocks"), lua.LNumber(sys.Blocks))
 	tbl.RawSetH(lua.LString("blksize"), lua.LNumber(sys.Blksize))
+	return nil
 }
