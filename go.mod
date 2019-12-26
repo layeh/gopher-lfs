@@ -1,4 +1,4 @@
-module layeh.com/layeh.com/gopher-lfs
+module layeh.com/gopher-lfs
 
 go 1.12
 
