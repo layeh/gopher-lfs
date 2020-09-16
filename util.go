@@ -2,14 +2,15 @@ package lfs
 
 import (
 	"os"
+	"path/filepath"
 
 	"github.com/yuin/gopher-lua"
 )
 
 func attributes(L *lua.LState, statFunc func(string) (os.FileInfo, error)) int {
-	filepath := L.CheckString(1)
+	fp := L.CheckString(1)
 
-	stat, err := statFunc(filepath)
+	stat, err := statFunc(fp)
 	if err != nil {
 		L.Push(lua.LNil)
 		L.Push(lua.LString(err.Error()))
@@ -20,6 +21,11 @@ func attributes(L *lua.LState, statFunc func(string) (os.FileInfo, error)) int {
 		L.Push(lua.LNil)
 		L.Push(lua.LString(err.Error()))
 		return 2
+	}
+	if table.RawGetString("mode").String() == "link" {
+		if path, err := filepath.EvalSymlinks(fp); err == nil {
+			table.RawSetString("target", lua.LString(path))
+		}
 	}
 	if L.GetTop() > 1 {
 		aname := L.CheckString(2)
