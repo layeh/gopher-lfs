@@ -28,8 +28,8 @@ func attributes(L *lua.LState, statFunc func(string) (os.FileInfo, error)) int {
 		}
 	}
 	if L.GetTop() > 1 {
-		aname := L.CheckString(2)
-		L.Push(table.RawGetH(lua.LString(aname)))
+		requestName := L.CheckString(2)
+		L.Push(table.RawGetString(requestName))
 		return 1
 	}
 	L.Push(table)
