@@ -8,5 +8,5 @@
 //
 // Below is an example usage of the library:
 //  L := lua.NewState()
-//  lfs.Preload(s)
+//  lfs.Preload(L)
 package lfs // import "layeh.com/gopher-lfs"
